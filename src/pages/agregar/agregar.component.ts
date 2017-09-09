@@ -2,7 +2,11 @@
  * Created by Sergio Enriquez on 07/09/2017.
  */
 import {Component, OnInit} from '@angular/core';
+import {AlertController, NavController} from 'ionic-angular';
+
 import {Lista, ListaItem} from '../../app/clases/index';
+
+import { ListaDeseosService } from '../../app/services/lista-deseos.service';
 
 @Component({
   selector: 'app-agregar',
@@ -17,7 +21,9 @@ export class AgregarComponent implements OnInit {
   items:ListaItem[] = [];
 
 
-  constructor() {
+  constructor(alertController:AlertController,
+              listaDeseosService:ListaDeseosService,
+              navController:NavController) {
   }
 
   ngOnInit() {}
@@ -33,6 +39,16 @@ export class AgregarComponent implements OnInit {
     this.items.push( item );
     this.nombreItem = '';
 
-
   }
+
+  eliminar(item:number){
+    this.items.splice(item,1);
+  }
+
+  guadarLista(){
+    if( this.nombreItem.length == 0){
+      return;
+    }
+  }
+
 }
