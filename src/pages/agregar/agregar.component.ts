@@ -21,9 +21,9 @@ export class AgregarComponent implements OnInit {
   items:ListaItem[] = [];
 
 
-  constructor(alertController:AlertController,
-              listaDeseosService:ListaDeseosService,
-              navController:NavController) {
+  constructor(public alertController:AlertController,
+              public listaDeseosService:ListaDeseosService,
+              public navController:NavController) {
   }
 
   ngOnInit() {}
@@ -46,9 +46,21 @@ export class AgregarComponent implements OnInit {
   }
 
   guadarLista(){
-    if( this.nombreItem.length == 0){
+      if( this.nombreLista.length == 0){
+        let alert = this.alertController.create({
+          title: 'Nombre de la lista',
+          subTitle: 'El nombre de la lista es necesesario',
+          buttons: ['Ok']
+        });
+        alert.present();
       return;
     }
+
+    let lista = new Lista(this.nombreLista);
+    lista.items = this.items;
+
+    this.listaDeseosService.listas.push( lista );
+    this.navController.pop();
   }
 
 }
