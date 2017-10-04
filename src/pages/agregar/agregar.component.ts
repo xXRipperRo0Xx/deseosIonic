@@ -15,7 +15,7 @@ import { ListaDeseosService } from '../../app/services/lista-deseos.service';
 
 export class AgregarComponent implements OnInit {
 
-  nombreLista:string;
+  nombreLista:string = "";
   nombreItem:string = "";
 
   items:ListaItem[] = [];
@@ -59,7 +59,8 @@ export class AgregarComponent implements OnInit {
     let lista = new Lista(this.nombreLista);
     lista.items = this.items;
 
-    this.listaDeseosService.listas.push( lista );
+    // this.listaDeseosService.listas.push( lista );
+    this.listaDeseosService.agregarLista( lista );
     this.navController.pop();
   }
 

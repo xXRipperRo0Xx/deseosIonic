@@ -1,29 +1,41 @@
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>Lista de pendientes</ion-title>
+    <ion-title>Lista de terminados</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h1>Pendientes¡¡¡</h1>
-  <ion-card *ngFor="let lista of listaDeseosService.listas">
-    <ion-item>
-      Botton
+
+  <ion-grid *ngIf="(listaDeseosService.listas | pendientes).length === 0">
+    <ion-row>
+      <ion-col class="text-center caja-vacia">
+        <ion-icon class="icono-grande" ios="logo-angular" md="logo-angular"></ion-icon>
+        <p>
+          Sin pendientes
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card *ngFor="let lista of listaDeseosService.listas | pendientes; let i = index">
+    <ion-item color="dark" (click)="verDetalle(lista ,i)" >
+      <h2 style="color: dodgerblue">{{ lista.nombre }}</h2>
+      <ion-note item-right>
+        {{ lista.items.length }} items
+      </ion-note>
     </ion-item>
-    <h2>{{ lista.nombre }}</h2>
+
     <ion-list>
-      <ion-item>
-        <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle"></ion-icon>
-        lel
+      <ion-item *ngFor="let item of lista.items | slice:0:2" (click)="verDetalle(lista ,i)">
+        <ion-icon *ngIf="!item.completado" ios="ios-square-outline" md="md-square-outline"></ion-icon>
+        <ion-icon *ngIf="item.completado" ios="ios-checkbox-outline" md="md-checkbox-outline"></ion-icon>
+          {{ item.nombre }}
       </ion-item>
-      <ion-item>
-        <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle"></ion-icon>
-        lolis
+
+      <ion-item class="text-center" *ngIf="lista.items.length > 2">
+        <ion-icon color="primary" ios="ios-square-outline" md="md-arrow-dropdown"></ion-icon>
       </ion-item>
-      <ion-item>
-        <ion-icon ios="ios-checkmark-circle" md="md-checkmark-circle"></ion-icon>
-        lul
-      </ion-item>
+
     </ion-list>
   </ion-card>
 
